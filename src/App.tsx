@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import { useSessionStorage } from "usehooks-ts";
 import PrivateRoute from "./PrivateRoute/route";
+import AssignmentsView from "./components/AssignmentsView";
 
 
 
@@ -24,7 +25,11 @@ function App() {
           }
           />
           <Route path='/dashboard' element={<Dashboard />} />
-
+          <Route path='/assignments/:id' element={
+              <PrivateRoute>
+                  <AssignmentsView />
+              </PrivateRoute>
+          }/>
       </Routes>
   );
 }

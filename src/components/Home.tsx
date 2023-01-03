@@ -7,14 +7,14 @@ const Home = () => {
     const changeWindow = (url: string) => {
         window.location.href = url;
     }
-    return(
+    return (
         <div>
             Home
             Your token is {session}
             <Button variant='outlined' onClick={() => changeWindow('dashboard')}>Dashboard</Button>
             <Button variant='outlined' onClick={() => changeWindow('login')}>Login</Button>
         </div>
-     )
+    )
 };
 
 export default Home;
