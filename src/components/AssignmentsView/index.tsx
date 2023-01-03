@@ -1,23 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {Link, Navigate, useParams} from "react-router-dom";
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useSessionStorage} from "usehooks-ts";
 
 
-interface Assignment {
-    id: number,
-    status: string,
-    githubUrl?: string,
-    branch?: string,
-    codeReviewVideoUrl?: string,
-    user?: []
-}
-
 const AssignmentsView = () => {
 
 
-    const [assignment, setAssignment] = useState<Assignment[]>([]);
+    const [assignment, setAssignment] = useState(null);
+    const [gitHubURL, setGitHubURL] = useState('')
+    const [branch, setBranch] = useState('')
+
     const routerId = useParams();
     const [jwtToken] = useSessionStorage('jwt', '')
 
@@ -33,27 +27,44 @@ const AssignmentsView = () => {
                     // console.log(res);
                     setAssignment(res.data)
                     console.log(assignment)
-                    console.log('12')
                 }
             })
             .catch(err => console.log(err))
     }, [])
 
 
-    // console.log("###")
-    // console.log(assignment.id)
-    // console.log("###")
-
-    const abc = () => {
-        console.log(assignment)
+    const handleClick = () => {
+        axios.put(`/api/assignments/${routerId.id}`, {
+            githubUrl: gitHubURL,
+            branch: branch,
+            status: "okay"
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     }
+
     return (
         <>
-            {/*<h1>AssinmentID: {routerId.id}</h1>*/}
+            <h1>AssinmentID: {routerId.id}</h1>
             Hello world hi
-            {assignment ? <div>{assignment.status}</div>
+            {assignment ?
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div>
+                    {assignment["status"]}
+                    </div>
+                    <div>
+                        {assignment["githubUrl"]}
+                    </div>
+                    <div>
+                        {assignment["branch"]}
+                    </div>
+                </div>
                  : <></>}
-            <Button onClick={abc}>SSSSA</Button>
+            <div style={{display: 'flex', flexDirection: 'column', width: '500px'}}>
+            GitHub URL:  <TextField onChange={e => setGitHubURL(e.target.value)} />
+            Branch: <TextField onChange={e => setBranch(e.target.value)}/>
+            <Button onClick={handleClick}>Submit</Button>
+            </div>
         </>
     );
 };
