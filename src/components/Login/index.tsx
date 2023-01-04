@@ -2,7 +2,7 @@ import React, {ReactNode, SetStateAction, useEffect, useState} from 'react';
 import axios from "axios";
 import {Alert, Button, TextField} from "@mui/material";
 import { useSessionStorage } from "usehooks-ts";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 const Login = () => {
 
@@ -52,9 +52,12 @@ const [jwt, setJwt] = useSessionStorage('jwt', '')
                 <TextField placeholder='Password' onChange={(e) => setPassword(e.target.value)} type='password'/>
             </div>
             <Button onClick={handleLogin} variant='outlined'>Login</Button>
+            or
+            <Link to={'/register'}>Register</Link>
             {areCredentialsWrong &&
                 <Alert severity='error'>Wrong username or password</Alert>
             }
+
         </div>
     )
 }

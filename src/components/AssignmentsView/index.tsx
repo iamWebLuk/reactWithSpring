@@ -39,7 +39,19 @@ const AssignmentsView = () => {
             branch: branch,
             status: "okay"
         })
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                location.reload();
+            })
+            .catch(err => console.log(err))
+    }
+
+    const handleDelete = () => {
+        axios.delete(`/api/assignments/${routerId.id}`)
+            .then(res => {
+                console.log(res)
+                window.location.href='/dashboard'
+            })
             .catch(err => console.log(err))
     }
 
@@ -64,6 +76,7 @@ const AssignmentsView = () => {
             GitHub URL:  <TextField onChange={e => setGitHubURL(e.target.value)} />
             Branch: <TextField onChange={e => setBranch(e.target.value)}/>
             <Button onClick={handleClick}>Submit</Button>
+                <Button variant='outlined' color='error' onClick={handleDelete}>Delete Task</Button>
             </div>
         </>
     );

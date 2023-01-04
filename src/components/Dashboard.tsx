@@ -39,7 +39,7 @@ const Dashboard = () => {
         })
             .then(res => {
                 console.log(res)
-                window.location.href = `AssignmentsView/${res.data.id}`
+                window.location.href = `assignments/${res.data.id}`
             })
             .catch(err => {
                 console.log(err.response.status)
@@ -51,7 +51,7 @@ const Dashboard = () => {
 
     const handleRegister = () => {
         console.log(`${username} = username, ${password} = password, ${cohortStartDate} = cohortStartDate`)
-        axios.post('/api/register', {
+        axios.post('/api/auth/logout', {
             username, password, cohortStartDate
         })
             .then(res => console.log(res))
