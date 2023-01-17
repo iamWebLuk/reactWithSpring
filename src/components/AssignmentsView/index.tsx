@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import axios from 'axios';
 import { useSessionStorage } from 'usehooks-ts';
-
+import { useGetFetchHook } from '../../Services/useFetchHook';
 interface Assignment {
   id: number;
   status: string;
@@ -35,17 +35,19 @@ const AssignmentsView = () => {
     console.log(assignment['githubUrl']);
   }
 
-  useEffect(() => {
-    axios
-      .get(`/api/assignments/${routerId.id}`)
-      .then((res) => {
-        if (res.status === 200) {
-          setAssignment(res.data);
-          console.log(assignment);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/assignments/${routerId.id}`)
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         setAssignment(res.data);
+  //         console.log(assignment);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+    useGetFetchHook(`/api/assignments/${routerId}`)
 
   const handleClick = () => {
     axios

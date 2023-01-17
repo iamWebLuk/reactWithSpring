@@ -2,7 +2,7 @@ import React, {ReactNode, SetStateAction, useEffect, useState} from 'react';
 import axios from "axios";
 import {Alert, Button, TextField} from "@mui/material";
 import { useSessionStorage } from "usehooks-ts";
-import {Link, Navigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -25,7 +25,6 @@ const [jwt, setJwt] = useSessionStorage('jwt', '')
                 setSession(res.data)
                 console.log(res)
                 window.location.href = '/'
-              // return  <Navigate to='/' replace />
             })
             .catch(err => {
                 console.log(err)
