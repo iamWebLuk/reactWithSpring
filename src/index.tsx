@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom";
-
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeContexts, themes } from './components/ThemeContext/index';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
+    <ThemeContexts.Provider value={themes.light}>
       <BrowserRouter>
-          <App />
+        <App />
       </BrowserRouter>
+    </ThemeContexts.Provider>
   </React.StrictMode>
 );
 

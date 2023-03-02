@@ -1,45 +1,42 @@
-import {useSessionStorage} from "usehooks-ts";
-import axios from "axios";
-import {useEffect, useState} from "react";
+import { useLocalStorage } from 'usehooks-ts';
+import axios from 'axios';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface FetchMethods {
-    Get: string
-    Put: string;
-    post: string;
-    delete: string;
+  Get: string;
+  Put: string;
+  post: string;
+  delete: string;
 }
 
+type Assignment = {
+  id: number;
+  status: string;
+  githubUrl: string;
+  branch: string;
+  codeReviewVideoUrl: string;
+};
+const useGetFetchHook = (
+  url: string
+  // data?: Assignment,
+  // setData?: Dispatch<SetStateAction<Assignment[]>>
+) => {
+  const [jwtToken] = useLocalStorage('jwt', '');
 
-
-// const useFetchHook = (fetchMethod: FetchMethods, url: string, data: {}) => {
-// const [jwt, setJwt] = useSessionStorage('jwt', '')
-//
-//        let abc = axios({method: fetchMethod}, url, data)
-//            axios({url, data, method: fetchMethod})
-//             .then(res => {
-//                 // setJwt(res.headers.authorization)
-//                 console.log(res)
-//             })
-//             .catch(err => {
-//                 console.log(err)
-//             })
-// }
-
-const useGetFetchHook = (url: string) => {
-    const [jwtToken] = useSessionStorage('jwt', '');
-
-    axios.defaults.headers.common['authorization'] = 'Bearer ' + jwtToken;
-    const [jwt, setJwt] = useSessionStorage('jwt', '')
-    const [response, setResponse] = useState({});
-    const [error, setError] = useState({});
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        axios.get(url)
-            .then(res => setResponse(res))
-            .catch(err => setError(err))
-            .finally(() => setLoading(false))
-    },[])
-    return{ response, error, loading }
-}
+  axios.defaults.headers.common['authorization'] = 'Bearer ' + jwtToken;
+  // const [response, setResponse] = useState<Assignment[]>();
+  const [data, setData] = useState<Assignment[]>();
+  const [error, setError] = useState({});
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    axios
+      .get<Assignment[]>(url)
+      .then((res) => setData(res.data))
+      .catch((err) => setError(err))
+      .finally(() => setLoading(false));
+  }, []);
+  console.log(data);
+  return { data };
+};
 
 export { useGetFetchHook };
