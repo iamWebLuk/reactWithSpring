@@ -4,19 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeContexts, themes } from './components/ThemeContext/index';
+import Navbar from './components/NavBar';
+import ColorContext from './components/ThemeContext/ColorContext';
+import { CssBaseline, Divider } from '@mui/material';
+
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 
 root.render(
-  <React.StrictMode>
-    <ThemeContexts.Provider value={themes.light}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeContexts.Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ColorContext>
+    <CssBaseline />
+    <BrowserRouter>
+      <Navbar />
+      <Divider />
+      <App />
+    </BrowserRouter>
+  </ColorContext>,
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
